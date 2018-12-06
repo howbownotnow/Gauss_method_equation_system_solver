@@ -8,17 +8,18 @@ def gauss_solve(n, m):
         # проверка на обнулившиеся уравнения
         for eq in range(n - 1, -1, -1):
             # если в предыдущем уравнении обнулились сразу несколько элементов
-            nonzerocount = m
-            for elem in range(m):
+            nonzerocount = m + 1
+            for elem in range(m + 1):
                 if abs(system[eq][elem]) < 0.0000001:
                     nonzerocount -= 1
                     if nonzerocount == 0:
+                        # если получили уравнение типа 0 = 0
                         system.pop(eq)
                         n -= 1
                 else:
                     nonzero_index = elem
-                # если получили уравнение типа 0 = 0
-            if nonzerocount == 1 and nonzero_index == m - 1:
+            # если получили уравнение типа 0 = a
+            if nonzerocount == 1 and nonzero_index == m:
                 return 'NO'
 
         # проверка на нулевой элемент: меняем местами с последующими уравнениями
@@ -75,20 +76,24 @@ def gauss_solve(n, m):
     # проверка на обнулившиеся уравнения
     for eq in range(n - 1, -1, -1):
         # если в предыдущем уравнении обнулились сразу несколько элементов
-        nonzerocount = m
-        for elem in range(m):
+        nonzerocount = m + 1
+        for elem in range(m + 1):
             if abs(system[eq][elem]) < 0.0000001:
                 nonzerocount -= 1
+                print('nn', nonzerocount)
                 if nonzerocount == 0:
+                    # если получили уравнение типа 0 = 0
                     system.pop(eq)
                     n -= 1
             else:
                 nonzero_index = elem
-            # если получили уравнение типа 0 = 0
-        if nonzerocount == 1 and nonzero_index == m - 1:
+            # если получили уравнение типа 0 = a
+        if nonzerocount == 1 and nonzero_index == m:
             return 'NO'
 
     # todo: сделать проверку на бесконечное количество решений
+
+    print(system)
 
     # обратный ход метода Гаусса
 
@@ -101,8 +106,6 @@ def gauss_solve(n, m):
         answer.append(x)
 
     return answer
-
-
 
 n, m = map(int, input().split())
 
