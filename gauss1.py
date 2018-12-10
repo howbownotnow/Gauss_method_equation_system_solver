@@ -59,7 +59,7 @@ def gauss_solve(n, m):
                 for k in range(m + 1):
                     system[j][k] -= system[i - 1][k] * coef
 
-    print(system)
+    # print(system)
 
     # for i in range(n - 1, -1, -1):
     #     # проверка на обнулившиеся уравнения
@@ -80,7 +80,7 @@ def gauss_solve(n, m):
         for elem in range(m + 1):
             if abs(system[eq][elem]) < 0.0000001:
                 nonzerocount -= 1
-                print('nn', nonzerocount)
+                # print('nn', nonzerocount)
                 if nonzerocount == 0:
                     # если получили уравнение типа 0 = 0
                     system.pop(eq)
@@ -93,7 +93,10 @@ def gauss_solve(n, m):
 
     # todo: сделать проверку на бесконечное количество решений
 
-    print(system)
+    if n < m:
+        return 'INF'
+
+    # print(system)
 
     # обратный ход метода Гаусса
 
@@ -101,11 +104,15 @@ def gauss_solve(n, m):
 
     for i in range(n):
 
-        x = (system[n - i - 1][m] - sum(list(map(lambda x, y: x * y, system[n - i - 1][m - 1: m - i - 1 : -1], answer)))) / system[n - i - 1][m - i - 1] # домножать на х
+        x = (system[n - i - 1][m] - sum(list(map(lambda x, y: x * y, system[n - i - 1][m - 1 : m - i - 1 : -1], answer)))) / system[n - i - 1][m - i - 1]
 
         answer.append(x)
 
-    return answer
+    answer.reverse()
+
+    str_answer = list(map(str, answer))
+
+    return f"YES\n{' '.join(str_answer)}"
 
 n, m = map(int, input().split())
 
@@ -114,6 +121,6 @@ system = []
 for i in range(n):
     system.append([int(j) for j in input().split()])
 
-print(system)
+# print(system)
 
 print(gauss_solve(n, m))
